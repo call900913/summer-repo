@@ -1,8 +1,9 @@
 require 'colorize'
+require 'byebug'
 require_relative 'cursor'
 require_relative 'board'
-#to_s ouece
-
+#to_s piece
+#create loop either here or in game.rb
 class Display
   attr_reader :cursor
 
@@ -11,52 +12,45 @@ class Display
     @cursor = Cursor.new([0, 0], board)
   end
 
-  def move(new_pos)
-  end
-
-
-  # def test_loop
-  #   3.times do
-  #     render
-  #     @cursor.get_input
-  #   end
-  # end
-
   def render
-    @board.grid.each.with_index do |row, idx1|
-      row.each.with_index do |piece, idx2|
-
-
-        if idx1.even?
-          if idx2.even?
-            if @cursor.cursor_pos == [idx1, idx2]
-              print "X".colorize( :background => :green)
-            else
-              print "X".colorize( :background => :red)
-            end
-          else
-            print "X".colorize( :background => :blue)
-          end
-        else
-          if idx2.even?
-            if @cursor.cursor_pos == [idx1, idx2]
-              print "X".colorize( :background => :green)
-            else
-              print "X".colorize( :background => :blue)
-            end
-          else
-            print "X".colorize( :background => :red)
-          end
-        end
-      end
+    @board.grid.each.with_index do |row, idx|
+      idx.even? ? start_red(row, idx) : start_blue(row, idx)
       print "\n"
     end
 
-
-=begin
-
-=end
-
   end
+
+  def start_red(tile, idx)
+    i = 1
+    tile.each_index do |idx2|
+      if @cursor.cursor_pos == [idx, idx2]
+        print "  ".colorize(:background => :green)
+      elsif i.odd?
+        print "  ".colorize(:background => :red)
+      else
+
+        print "  ".colorize(:background => :blue)
+      end
+      i += 1
+    end
+  end
+#null_piece.to_s
+#
+
+  def start_blue(tile, idx)
+    i = 1
+    tile.each_index do |idx2|
+      if @cursor.cursor_pos == [idx, idx2]
+        print "  ".colorize(:background => :green)
+      elsif i.odd?
+        print "  ".colorize(:background => :blue)
+      else
+        print "  ".colorize(:background => :red)
+      end
+      i += 1
+    end
+  end
+
+
 
 end
