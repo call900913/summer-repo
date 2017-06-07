@@ -43,4 +43,35 @@ class Board
     true
   end
 
+  BACKROW = [:rook, :knight, :bishop, :queen, :king, :bishop, :knight, :rook]
+
+  def populate
+    @grid[0].each_index do |idx|
+        @grid[0][idx] = BACKROW[idx]
+    end
+
+    @grid[-1].each_index do |idx|
+      @grid[-1][idx] = BACKROW.reverse[idx]
+    end
+
+    @grid[1].each_index do |idx|
+      @grid[1][idx] = :pawn
+    end
+
+    @grid[-2].each_index do |idx|
+      @grid[-2][idx] = :pawn
+    end
+  end
+
+#Is king defined here?
+  def in_check?(color)
+    king.color.position
+  end
+
+  def checkmate?(color)
+
+
+    #check if none of the player's pieces has any valid move
+  end
+
 end
